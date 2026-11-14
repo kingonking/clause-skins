@@ -1,9 +1,0 @@
-{
-  "id": "minimal",
-  "name": "clean minimal",
-  "author": "kingonking",
-  "description": "a calm modern app. light, rounded, one indigo accent. effects off",
-  "version": "1.0.0",
-  "effects": false,
-  "themeColor": "#ffffff"
-}
