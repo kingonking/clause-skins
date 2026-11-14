@@ -1,0 +1,9 @@
+{
+  "id": "terminal",
+  "name": "terminal",
+  "author": "kingonking",
+  "description": "a calm green-on-black retro terminal. effects off",
+  "version": "1.0.0",
+  "effects": false,
+  "themeColor": "#030703"
+}
