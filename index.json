@@ -9,6 +9,14 @@
       "effects": false
     },
     {
+      "id": "minimal",
+      "name": "clean minimal",
+      "version": "1.0.0",
+      "description": "a calm modern app. light, rounded, one indigo accent. effects off",
+      "author": "kingonking",
+      "effects": false
+    },
+    {
       "id": "paper",
       "name": "paper notebook",
       "version": "1.0.0",
