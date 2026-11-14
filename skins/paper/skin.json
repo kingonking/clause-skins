@@ -1,0 +1,9 @@
+{
+  "id": "paper",
+  "name": "paper notebook",
+  "author": "kingonking",
+  "description": "a cozy ruled notebook: ink, pencil and index cards. effects off",
+  "version": "1.0.0",
+  "effects": false,
+  "themeColor": "#fbf7ee"
+}
