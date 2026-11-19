@@ -1,0 +1,520 @@
+/* claude code: clause dressed as the claude code terminal (v2.1.3xx). every colour, glyph and border comes from the real
+   cli's dark theme (see the notes in the skin's commit): #0c0c0c terminal, #cccccc text, #999999 "inactive" grey,
+   #d77757 "claude" orange, #b1b9f9 "suggestion", #4eba65 "success", #ff6b80 "error", #ffc107 "warning",
+   #373737 "userMessageBackground", #888888 "promptBorder". glyphs: ● tool/reply dot, ⎿ result connector, ❯ prompt,
+   ✻ brand mark, · ✢ * ✶ ✻ ✽ spinner. effects off (skin.json effects:false).
+   every rule sits under :root[data-skin="claude-code"], so the stock look and other skins are never touched */
+:root[data-skin="claude-code"]{
+  color-scheme:dark;background:#0c0c0c;
+  --cc-bg:#0c0c0c;--cc-panel:#0c0c0c;--cc-raise:#1a1a1a;--cc-side:#262626;
+  --cc-fg:#cccccc;--cc-hi:#ffffff;--cc-bright:#f2f2f2;--cc-dim:#999999;--cc-faint:#6c6c6c;--cc-subtle:#505050;
+  --cc-rule:#888888;--cc-line:#3a3a3a;--cc-line2:#505050;
+  --cc-user:#373737;--cc-userh:#464646;--cc-sel:#264f78;
+  --cc-claude:#d77757;--cc-shimmer:#eb9f7f;--cc-sugg:#b1b9f9;--cc-ok:#4eba65;--cc-err:#ff6b80;--cc-warn:#ffc107;--cc-auto:#af87ff;--cc-bash:#fd5db1;
+  --cc-mono:"Cascadia Mono","Cascadia Code",Consolas,ui-monospace,"SF Mono",Menlo,monospace;
+  --cc-r:6px;
+  --fg:#cccccc;--dim:#999999;--line:#3a3a3a;--asd:#b1b9f9;--accent:#d77757;--acc:#d77757;--rb:none;
+
+  /* flat and still, like a terminal. only the spinner moves (the studio tab keeps its own look) */
+  & :not(.studio-app, .studio-app *), & :not(.studio-app *)::before, & :not(.studio-app *)::after{
+    animation:none!important;transition:none!important;box-shadow:none!important;backdrop-filter:none!important;text-shadow:none!important}
+  & body{background:var(--cc-bg)!important;color:var(--cc-fg);font:14px/1.45 var(--cc-mono);filter:none!important}
+  & :is(#gl,#fx,#scan,#hack,#scn,.flash,#logo3d,#logoimg,#logo){display:none!important}
+  & .rb{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:inherit}
+  & ::selection{background:var(--cc-sel);color:var(--cc-hi)}
+  & :is(input,select,textarea,button):not(.studio-app *){font-family:var(--cc-mono);color-scheme:dark}
+  & :not(.studio-app, .studio-app *){scrollbar-color:var(--cc-subtle) var(--cc-bg);scrollbar-width:thin}
+  & ::-webkit-scrollbar{width:9px;height:9px;background:var(--cc-bg)}
+  & ::-webkit-scrollbar-thumb{background:var(--cc-subtle);border:2px solid var(--cc-bg);border-radius:4px}
+  & a{color:var(--cc-sugg);text-decoration:none}
+  & a:hover{text-decoration:underline;text-underline-offset:3px}
+
+  /* buttons: plain dim words, like claude code's hint text. hover goes white, focus gets the ❯ colour */
+  & :is(header,#side,#col,#asd,#mod,#ctx,#rview,.pane,.vw-panel,.vr-overlay,.vr-notice) :is(button,.mbtn){
+    background:none;color:var(--cc-dim);border:0;border-radius:0;padding:1px 3px;font:13px/1.4 var(--cc-mono);letter-spacing:0;text-transform:none;opacity:1;transform:none;filter:none;cursor:pointer}
+  & :is(header,#side,#col,#asd,#mod,#ctx,#rview,.pane,.vw-panel,.vr-overlay,.vr-notice) :is(button,.mbtn):hover:not(:disabled){color:var(--cc-hi);background:none}
+  & :is(header,#side,#col,#asd,#mod,#ctx,#rview,.pane,.vw-panel,.vr-overlay,.vr-notice) :is(button,.mbtn):disabled{color:var(--cc-subtle);opacity:1;cursor:default}
+  & :is(header,#side,#col,#asd,#mod,#ctx,#rview,.pane,.vw-panel,.vr-overlay,.vr-notice) :is(button,.mbtn):focus-visible{outline:1px solid var(--cc-sugg);outline-offset:1px;border-radius:3px}
+  /* the dialog/panel buttons get a thin rounded box (claude code draws its dialogs with round borders) */
+  & :is(#mod,#ctx,#rview,.pane,.vw-panel,.vr-overlay,.vr-notice,#asd,#stopbar,#wsform) .mbtn,& #mod #modc button:not(.sw),& .vw-panel button,& .vr-overlay button{
+    border:1px solid var(--cc-line2);border-radius:var(--cc-r);padding:2px 10px;color:var(--cc-fg)}
+  & :is(#mod,#ctx,#rview,.pane,.vw-panel,.vr-overlay,.vr-notice,#asd,#stopbar,#wsform) .mbtn:hover:not(:disabled),& #mod #modc button:not(.sw):hover:not(:disabled){border-color:var(--cc-rule);color:var(--cc-hi)}
+  /* "on" = selected option: success green with a ✔, exactly how claude code's select marks the chosen row */
+  & .mbtn.on,& #vsb.on,& #vox.on,& #auto.on,& #asideb.on,& #micb.on,& #rec.on{color:var(--cc-ok)!important;border-color:var(--cc-ok)!important;background:none!important}
+  & .mbtn.on::after{content:" \2714";color:var(--cc-ok)}
+  & :is(header,#side,#col,#asd,#mod,#ctx,#rview,.pane,.vw-panel) :is(select,input:not([type=checkbox]):not([type=radio]):not([type=range]),textarea){
+    background:var(--cc-bg);color:var(--cc-fg);border:1px solid var(--cc-line2);border-radius:var(--cc-r);padding:3px 8px;font:13px var(--cc-mono);outline:none;caret-color:var(--cc-hi)}
+  & :is(header,#side,#col,#asd,#mod,#ctx,#rview,.pane,.vw-panel) :is(select,input,textarea):focus{border-color:var(--cc-rule)}
+  & select option{background:#1a1a1a;color:var(--cc-fg)}
+  & :is(input,textarea)::placeholder{color:var(--cc-faint);opacity:1}
+  & :is(input[type=range],input[type=checkbox],input[type=radio],progress,#eff,#useinstructions):not(.studio-app *){accent-color:var(--cc-claude)}
+  /* checkboxes: claude code's multi-select [✔] / [ ] */
+  & input[type=checkbox]:not(.studio-app *, .unity-app *){-webkit-appearance:none;appearance:none;width:3.6ch!important;min-width:3.6ch;height:19px;margin:0 6px 0 0;padding:0;overflow:visible;border:0;background:none;font:13px/19px var(--cc-mono);color:var(--cc-dim);cursor:pointer;flex:none;vertical-align:middle}
+  & input[type=checkbox]:not(.studio-app *, .unity-app *)::before{content:"[ ]"}
+  & input[type=checkbox]:not(.studio-app *, .unity-app *):checked::before{content:"[\2714]";color:var(--cc-ok)}
+  & input[type=checkbox]:not(.studio-app *, .unity-app *):focus-visible{outline:1px solid var(--cc-sugg);outline-offset:1px}
+  & input[type=range]:not(.studio-app *){-webkit-appearance:none;appearance:none;background:none;height:16px;cursor:pointer}
+  & input[type=range]:not(.studio-app *)::-webkit-slider-runnable-track{height:2px;background:var(--cc-line2)}
+  & input[type=range]:not(.studio-app *)::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:9px;height:14px;margin-top:-6px;border:0;border-radius:2px;background:var(--cc-claude)}
+  & :is(.themerow button,.sw,#sfxb,#fxb)::after{content:none!important}
+  & :is(#bkpick,#ctx) :is(svg,img){filter:grayscale(1) brightness(1.1)}
+
+  /* header: claude code's welcome lines. ✻ mark in orange, the name bold white, the rest inactive grey */
+  & header{background:var(--cc-bg);border-bottom:0;padding:8px 16px 6px;gap:16px;align-items:center}
+  & #hero{transform:none!important;gap:0}
+  & #titlebox{transform:none;display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:baseline}
+  & #title{font:bold 15px/1.3 var(--cc-mono);letter-spacing:0;text-transform:none;color:var(--cc-hi)}
+  & #title::before{content:"\273B";display:inline;position:static;opacity:1;mix-blend-mode:normal;color:var(--cc-claude);margin-right:9px;font-weight:normal}
+  & #title::after{display:none}
+  & #sub{font:13px/1.3 var(--cc-mono);color:var(--cc-dim)}
+  & :is(#syncst,#livest){grid-column:1/-1;font:12px var(--cc-mono);color:var(--cc-dim)}
+  & :is(#syncst,#livest).err{color:var(--cc-err)}
+  & #syncst.lock{color:var(--cc-warn)}
+  & #status{font:13px var(--cc-mono);letter-spacing:0;text-transform:none;color:var(--cc-claude);min-width:0}
+  & #btns{gap:2px 4px;align-items:center}
+  & #btns>:is(button,select,#effw):not([hidden]):not(.pbtn)+:is(button,select,#effw):not([hidden])::before{content:none}
+  & header :is(select#backend,select#model,select#vsel){border:0!important;background:none!important;color:var(--cc-dim)!important;padding:1px 2px!important;font-size:13px!important;cursor:pointer}
+  & header :is(select#backend,select#model,select#vsel):hover{color:var(--cc-hi)!important}
+  & #effw{font:13px var(--cc-mono);color:var(--cc-dim);gap:6px}
+  & #effv{color:var(--cc-fg);font-weight:normal}
+  & #bkpick i{opacity:1}
+  & #updb{color:var(--cc-warn)!important}
+  & #asideb.new::after{content:" \25CF";color:var(--cc-claude)}
+  & body.working header::after{display:none}
+  & body.pane #ptitle,& body.pane .pbtn{color:var(--cc-fg)}
+  & body.pane .pbtn:hover{color:var(--cc-hi)}
+
+  /* plugin tab strip: words; the open tab white with an orange underline */
+  & #tabs{scrollbar-width:none!important;background:var(--cc-bg);border-bottom:1px solid var(--cc-line);height:26px;padding:0 12px;gap:4px}
+  & #tabs button{font:13px var(--cc-mono);color:var(--cc-dim);padding:0 10px;background:none;border:0;box-shadow:inset 0 -2px 0 transparent!important}
+  & #tabs button:hover{color:var(--cc-hi)}
+  & #tabs button[aria-selected=true]{color:var(--cc-hi);box-shadow:inset 0 -2px 0 var(--cc-claude)!important}
+  & #tabs button.bad{color:var(--cc-err)}
+  & .ptab .perr{border:1px solid var(--cc-err);border-radius:var(--cc-r);background:none;color:var(--cc-err);font:13px var(--cc-mono)}
+
+  /* sidebar: a select list. focused/open row gets claude code's ❯ pointer + "suggestion" lavender */
+  & #side{background:var(--cc-bg);border-right:1px solid var(--cc-line);width:256px}
+  & body.noside #side{margin-left:-256px}
+  & #sidetop{padding:10px 10px 4px;gap:6px}
+  & #wsbar{gap:4px}
+  & #wsform{background:var(--cc-bg);border:1px solid var(--cc-rule);border-radius:var(--cc-r);padding:8px;gap:6px}
+  & #wsform .red{color:var(--cc-err)}
+  & #side #snew{text-align:left;color:var(--cc-fg);padding:3px 4px}
+  & #side #snew:hover{color:var(--cc-hi)}
+  & #side #sq{font-size:13px;border-radius:0;border-width:1px 0;border-color:var(--cc-rule);padding:4px 4px 4px 20px;background:var(--cc-bg) no-repeat 4px 50%/10px 14px}
+  & #side #sq{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='14'%3E%3Cpath d='M2 2l5 5-5 5' fill='none' stroke='%23999999' stroke-width='1.6'/%3E%3C/svg%3E")}
+  & #side #sq::placeholder{color:var(--cc-faint)}
+  & #side #chatsort{font-size:12px;border:0;color:var(--cc-dim);padding:0 2px}
+  & #chats{padding:0 6px 8px}
+  & .sh{font:12px var(--cc-mono);letter-spacing:0;text-transform:none;color:var(--cc-dim);padding:12px 6px 3px;border:0;margin:0}
+  & .sh.tg{cursor:pointer}
+  & .sh.tg:hover{color:var(--cc-hi)}
+  & .ch{padding:3px 6px 3px 20px;font:13px/1.35 var(--cc-mono);color:var(--cc-fg);gap:4px;border:0;border-radius:0;background:none}
+  & .ch::before{content:"";position:absolute;left:6px;top:3px;color:var(--cc-sugg)}
+  & .ch:hover{background:none;color:var(--cc-sugg)}
+  & .ch:hover::before{content:"\276F"}
+  & .ch.on{background:var(--cc-user);border:0;color:var(--cc-hi)}
+  & .ch.on::before{content:"\276F";color:var(--cc-dim)}
+  & .ch.run .t{font-weight:normal}
+  & .ch.arch .t{opacity:1;color:var(--cc-faint)}
+  & .chatmeta{font:11px/1.3 var(--cc-mono);color:var(--cc-dim);padding-top:1px;gap:0 8px}
+  & .ch .chatstate::before{display:none!important}
+  & .ch.run .chatstate{color:var(--cc-claude)}
+  & .ch.run .chatstate::before{content:"\2736";display:inline-block!important;width:auto;height:auto;border:0;margin:0 5px 0 0;background:none;animation:ccspin 1.2s steps(1) infinite!important}
+  & .ch.wait .chatstate{color:var(--cc-warn)}
+  & .ch.wait .chatstate::before{content:"\25CF";display:inline!important;border:0;width:auto;height:auto;margin:0 5px 0 0;background:none}
+  & .ch.stop .chatstate{color:var(--cc-err)}
+  & .ch.stop .chatstate::before{content:"\2718";display:inline!important;border:0;width:auto;height:auto;margin:0 5px 0 0;background:none}
+  & .ch.bgagents .chatstate{color:var(--cc-sugg)}
+  & .ch .syncic{color:var(--cc-dim)}
+  & .ch .wstag{border:1px solid var(--cc-line2);border-radius:4px;color:var(--cc-dim);padding:0 4px}
+  & .ch .bk{background:none;color:var(--cc-dim);border:1px solid var(--cc-line2);border-radius:4px;padding:0 4px;letter-spacing:0}
+  & .ch .ops b{color:var(--cc-dim);font-family:var(--cc-mono)}
+  & .ch .ops b:hover{background:none;color:var(--cc-hi)}
+  & .ch .ops b.sure{background:none;color:var(--cc-err)}
+  & #side .ch input{border:1px solid var(--cc-rule);border-radius:4px;background:var(--cc-bg);color:var(--cc-hi);font:13px var(--cc-mono)}
+  & .ch.hit .sn{color:var(--cc-dim);font:11px var(--cc-mono)}
+  & .ch.hit .sn :is(b,mark,em){color:var(--cc-sugg);background:none}
+  & .none{color:var(--cc-dim);font:12px var(--cc-mono)}
+  & #sidefoot{border-top:1px solid var(--cc-line);padding:6px 10px}
+  & #side #menub{padding:2px 4px;gap:6px;font:13px var(--cc-mono);color:var(--cc-fg)}
+  & #side #menub:hover,& #side #menub[aria-expanded=true]{background:none;color:var(--cc-sugg)}
+  & #side #menub:hover *{color:var(--cc-sugg)}
+  & #menuav{display:none}
+  & #menuname::before{content:"\276F  ";color:var(--cc-dim)}
+  & #menub .mcar{color:var(--cc-dim)}
+
+  /* usage line: claude code's status line, all inactive grey */
+  & #usagebar{background:var(--cc-bg);border-bottom:1px solid var(--cc-line);color:var(--cc-dim);font:12px var(--cc-mono);padding:4px 16px;gap:3px 18px}
+  & #col #usagebar :is(select,#accountsel,#instructionsel){font:12px var(--cc-mono);padding:0 4px;border:0;color:var(--cc-dim);background:none}
+  & #col #usagebar button{font:12px var(--cc-mono);padding:0 2px;border:0}
+  & #col #usagebar label{color:var(--cc-dim)}
+  & :is(#chatusage,#dayusage,#contextlabel){color:var(--cc-dim)}
+  & #contextmeter{height:8px;width:84px;border:0;border-radius:0;background:#505370;-webkit-appearance:none;appearance:none}
+  & #contextmeter::-webkit-progress-bar{background:#505370}
+  & #contextmeter::-webkit-progress-value{background:var(--cc-sugg)}
+  & #contextmeter.high::-webkit-progress-value{background:var(--cc-warn)}
+
+  /* the transcript: one blank row between items, a 2-column gutter for ❯ and ● */
+  & #chatstage{background:var(--cc-bg)}
+  & main{padding:16px 22px 10px;gap:19px}
+  & .msg{max-width:none;font:15px/19px var(--cc-mono)}
+  & .msgbody{line-height:19px}
+  & .msgbody :is(p,ul,ol,pre,table,blockquote){margin:19px 0}
+  & .msgbody li{margin:0}
+  & .msgbody>:first-child{margin-top:0}& .msgbody>:last-child{margin-bottom:0}
+  /* sent prompt: a full-width #373737 band, a grey ❯, white text */
+  & .msg.user{align-self:stretch;max-width:none;background:var(--cc-user);border:0;border-radius:0;padding:0 8px 0 26px;margin:0 -8px;position:relative;color:var(--cc-hi)}
+  & .msg.user::before{content:"\276F";position:absolute;left:8px;top:0;color:var(--cc-dim)}
+  & .msg.user.autonudge{background:none}
+  & .msg.user.autonudge::before{content:"\276F  continue " attr(data-n);position:static;color:var(--cc-dim);font-size:15px}
+  /* reply: ● then plain text */
+  & .msg.bot{align-self:stretch;max-width:none;background:none;border:0;border-radius:0;padding:0 0 0 18px;position:relative;color:var(--cc-fg)}
+  & .msg.bot::before{content:"\25CF";position:absolute;left:0;top:0;color:var(--cc-hi)}
+  & .msg.bot.live::before{color:var(--cc-dim)}
+  & .msg.bot.live::after{content:"";display:none}
+  /* timestamps: the "✻ done 10:56 PM" line under a reply; prompts don't show one */
+  & .msg.user::after,& .msg.err::after{display:none}
+  & .msg.bot:not(.live)::after{content:"\273B  done \B7  " attr(data-ts);display:block;margin:19px 0 0 -18px;font:15px/19px var(--cc-mono);letter-spacing:0;opacity:1;color:var(--cc-dim)}
+  /* tool rows: "● Name {input}". clause prints a ▸ first; hide it and draw the dot. last one while working blinks grey */
+  & .msg.tool{max-width:none;color:var(--cc-fg);font:15px/19px var(--cc-mono);border:0;border-image:none;padding:0 0 0 18px;text-indent:-.6em;position:relative;opacity:1;white-space:pre-wrap;word-break:break-all;overflow-wrap:anywhere}
+  & .msg.tool:not(.subtool)::first-letter{font-size:0;letter-spacing:0;line-height:0;vertical-align:top}
+  & .msg.tool::before{content:"\25CF";position:absolute;left:0;top:0;color:var(--cc-ok)}
+  & body.working main>.msg.tool:last-child::before{color:var(--cc-dim);animation:ccblink 1s steps(1) infinite!important}
+  /* rows that run inside an agent: the indented ⎿ result connector, dim */
+  & .msg.tool.subtool{opacity:1;color:var(--cc-dim);padding-left:54px;text-indent:0;margin-top:-19px}
+  & .msg.tool.subtool::before{content:"\23BF";left:18px;color:var(--cc-dim)}
+  & .msg.tool.astraimg{color:var(--cc-hi)}
+  & .msg.tool.astraimg::before{color:var(--cc-claude)}
+  /* errors: red ● and the error colour */
+  & .msg.err,& .err{color:var(--cc-err)}
+  & .msg.err{align-self:stretch;max-width:none;background:none;border:0;border-radius:0;padding:0 0 0 18px;position:relative;font:15px/19px var(--cc-mono)}
+  & .msg.err::before{content:"\25CF";position:absolute;left:0;top:0;color:var(--cc-err)}
+  & .msg.clash{color:var(--cc-warn);border-left:0;padding-left:18px;position:relative;font-family:var(--cc-mono)}
+  & .msg.clash::before{content:"\25CF";position:absolute;left:0;color:var(--cc-warn)}
+  & .msg.found{outline:1px solid var(--cc-warn);outline-offset:3px}
+  & #col .msg .foldb{border:0;background:none;padding:0;color:var(--cc-dim);font:13px var(--cc-mono)}
+  & #col .msg .foldb:hover{color:var(--cc-hi)}
+  & .msg.user .asidetag{color:var(--cc-sugg);font:12px var(--cc-mono);letter-spacing:0}
+  & .acts{gap:10px}
+  & .acts button{background:none!important;border:0!important;padding:0!important;color:var(--cc-dim)!important;font:12px var(--cc-mono)!important}
+  & .acts button:hover{color:var(--cc-hi)!important}
+  /* markdown, the way claude code renders it in a terminal */
+  & .msgbody strong{font-weight:bold;color:var(--cc-bright)}
+  & .msgbody em{font-style:italic;color:inherit}
+  & .msgbody :is(h1,h2,h3,h4,h5,h6){font:bold 15px/19px var(--cc-mono);color:var(--cc-hi);margin:19px 0 0}
+  & .msgbody h1{text-decoration:underline;text-underline-offset:3px}
+  & .msgbody code{font:15px var(--cc-mono);background:none;padding:0;border:0;border-radius:0;color:var(--cc-sugg)}
+  & .msgbody pre{background:none;border:1px solid var(--cc-line2);border-radius:var(--cc-r);padding:9px 14px;font:14px/19px var(--cc-mono);color:var(--cc-fg)}
+  & .msgbody pre code{font-size:14px;background:none;padding:0;border:0;color:inherit}
+  & .msgbody ul{list-style:none;padding-left:2ch}
+  & .msgbody ul>li{position:relative}
+  & .msgbody ul>li::before{content:"-";position:absolute;left:-2ch;color:var(--cc-fg)}
+  & .msgbody ol{padding-left:3ch}
+  & .msgbody ol>li::marker{color:var(--cc-fg)}
+  & .msgbody blockquote{padding:0 0 0 2ch;color:var(--cc-dim);border-left:0;font-style:italic;position:relative}
+  & .msgbody blockquote::before{content:"\258E";position:absolute;left:0;color:var(--cc-dim);font-style:normal}
+  & .msgbody a{color:var(--cc-sugg);text-decoration:none}
+  & .msgbody a:hover{text-decoration:underline}
+  & .msgbody hr{border:0;border-top:1px solid var(--cc-line2)}
+  & .msgbody table{border-collapse:collapse;font-size:14px}
+  & .msgbody :is(th,td){border:1px solid var(--cc-line2);padding:0 9px;text-align:left}
+  & .msgbody th{background:none;color:var(--cc-hi);font-weight:bold}
+  & .thumbs img{border:1px solid var(--cc-line2);border-radius:4px}
+  & .visual-open,& .visual-open video{background:var(--cc-bg);border:1px solid var(--cc-line2);border-radius:var(--cc-r)}
+  & .visual-missing{color:var(--cc-dim)}
+  & .key-ask{background:none;border:1px solid var(--cc-warn);border-radius:var(--cc-r);color:var(--cc-fg);font-family:var(--cc-mono);font-size:13px}
+  & .key-ask b{color:var(--cc-warn)}
+  & .key-ask a{color:var(--cc-sugg)}
+  & .key-ask.saved{border-color:var(--cc-ok)}
+  & .key-ask.saved .keyst{color:var(--cc-ok)}
+  & #col .editbox textarea.edit{border:1px solid var(--cc-rule);border-radius:var(--cc-r);background:var(--cc-bg);color:var(--cc-hi);font:15px var(--cc-mono)}
+  & .runcard .rbtn{color:var(--cc-sugg)}
+  & #col #tobottom{background:var(--cc-bg);border:1px solid var(--cc-rule);border-radius:var(--cc-r);color:var(--cc-hi);width:30px;height:30px;font-size:14px;padding:0}
+
+  /* the spinner row: "✶ working… 0:12 · Edit (esc to interrupt)" in claude orange */
+  & #working{color:var(--cc-claude);font:15px/19px var(--cc-mono);letter-spacing:0;padding:2px 22px 10px;background:var(--cc-bg);gap:9px}
+  & #working i{width:auto;height:auto;background:none!important;border-radius:0;filter:none!important;font-style:normal;color:var(--cc-claude);flex:none}
+  & #working i::before{content:"\2736";animation:ccspin 1.2s steps(1) infinite!important}
+  & #working::after{content:"(esc to interrupt)";position:static!important;display:inline!important;width:auto!important;background:none!important;color:var(--cc-dim);margin-left:-2px}
+  & #working.slow,& #working.slow i{color:var(--cc-warn)}
+  & #qbar{background:var(--cc-bg);padding:4px 16px 0;font:13px var(--cc-mono)}
+  & #qbar .qh{color:var(--cc-dim);letter-spacing:0;text-transform:none}
+  & #qbar .qh b,& #qbar .qc i{color:var(--cc-sugg)}
+  & #qbar .qc{background:none;border:1px solid var(--cc-line2);border-radius:var(--cc-r);color:var(--cc-fg)}
+  & #qbar .qc.fa{border-color:var(--cc-sugg)}
+  & #qbar .qc input{color:var(--cc-fg);background:none}
+  & #col #qbar .qb{border:0;background:none;color:var(--cc-dim)}
+  & #col #qbar .qb:hover{color:var(--cc-hi)}
+  & #pend{background:var(--cc-bg);padding:4px 16px 0}
+  & .pt{border:1px solid var(--cc-line2);border-radius:var(--cc-r);background:none}
+  & .pt.m{color:var(--cc-fg);font-family:var(--cc-mono)}
+  & .pt b{background:var(--cc-bg);color:var(--cc-err);border:1px solid var(--cc-line2)}
+  & #stopbar{background:var(--cc-bg);color:var(--cc-err);border-top:1px solid var(--cc-line);font:13px var(--cc-mono);letter-spacing:0}
+  & #lockbar{background:var(--cc-bg);color:var(--cc-warn);border-top:1px solid var(--cc-line);font:13px var(--cc-mono);letter-spacing:0}
+  & #lockbar b{color:var(--cc-warn)}
+  & #lockbar .ltool{color:var(--cc-dim)}
+  & #syncbar{background:var(--cc-bg);color:var(--cc-fg);border-top:1px solid var(--cc-line);font:13px var(--cc-mono);letter-spacing:0}
+  & #syncbar.warn{color:var(--cc-err)}
+
+  /* the prompt: claude code's input is a round border with no sides = a #888 rule above and below, "❯ " in front.
+     the buttons wrap onto the hint row under it, dim like "⏵⏵ auto mode on (shift+tab to cycle)" */
+  & footer{background:var(--cc-bg);border-top:0;padding:0 22px 10px 40px;gap:0 14px;align-items:center;flex-wrap:wrap}
+  & #inwrap{order:-1;flex:1 0 100%;background:var(--cc-bg)!important;padding:0;border:0;border-top:1px solid var(--cc-rule);border-bottom:1px solid var(--cc-rule);border-radius:0;animation:none;position:relative;margin:0 -22px 6px -40px;padding:0 22px}
+  & #inwrap::before{content:"\276F";position:absolute;left:22px;top:6px;z-index:1;color:var(--cc-hi);font:15px/19px var(--cc-mono);pointer-events:none}
+  & #inwrap::after{display:none}
+  & body.working #inwrap{border-color:var(--cc-rule)}
+  & #col #box{height:44px;min-height:31px;background:transparent;color:var(--cc-hi);border:0;border-radius:0;padding:6px 0 6px 18px;font:15px/19px var(--cc-mono);caret-color:var(--cc-hi)}
+  & #col #box::placeholder{color:var(--cc-dim)}
+  & #col #box:focus{outline:none}
+  & #col footer button{padding:0 1px;font:13px/19px var(--cc-mono);letter-spacing:0;text-transform:none;color:var(--cc-dim);border:0;background:none}
+  & #col footer button:hover:not(:disabled){color:var(--cc-hi)}
+  & #col :is(#att,#plusb){width:auto}
+  & #col footer #plusb{font-size:0}
+  & #col footer #plusb::before{content:"+ attach";font-size:13px}
+  & footer::after{content:"enter to send \B7  shift+enter for newline";order:1;flex:1;color:var(--cc-faint);font:13px/19px var(--cc-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  & body.working footer::after{content:"enter sends now \B7  esc to interrupt";color:var(--cc-dim)}
+  & footer>:is(#vox,#auto,#micb,#go){order:2}
+  & #col #go{color:var(--cc-fg)}
+  & #col #go::after{content:" \21B5";color:var(--cc-dim)}
+  & body.working #col #go{color:var(--cc-err)}
+  & body.working #col #go::after{content:" esc"}
+  & #micb.on,& #rec.on{color:var(--cc-err)!important;border:0!important}
+
+  /* aside: a second session pane, same transcript rules, its own prompt between two rules */
+  & #asd{background:var(--cc-bg);border-left:1px solid var(--cc-line)}
+  & #wrap.asdon #asd{border-left-color:var(--cc-line2)}
+  & #asdin{font:14px/19px var(--cc-mono)}
+  & #asdh{background:var(--cc-bg);border-bottom:1px solid var(--cc-line);padding:7px 12px;gap:8px}
+  & #asdt{color:var(--cc-hi);font:bold 14px var(--cc-mono);letter-spacing:0;text-transform:none}
+  & #asdt::before{content:"\273B";color:var(--cc-claude);font-weight:normal;margin-right:8px}
+  & #asdmd{border:0;gap:6px}
+  & #asd #asdmd button{padding:0 2px;font-size:12px;color:var(--cc-dim);border:0}
+  & #asd #asdmd button.on{color:var(--cc-ok);background:none}
+  & #asd #asdh>button{font-size:12px}
+  & #asdst{color:var(--cc-dim);font:12px var(--cc-mono);border-bottom:0;padding:3px 12px}
+  & #asdst.run{color:var(--cc-claude)}
+  & #asdhint{background:none;border:1px solid var(--cc-line2);border-radius:var(--cc-r);color:var(--cc-dim);font:13px var(--cc-mono)}
+  & #asdmsgs{padding:12px;gap:19px;background:var(--cc-bg)}
+  & #asdmsgs:empty::before{color:var(--cc-dim);font-family:var(--cc-mono);font-size:13px}
+  & .am{color:var(--cc-fg);position:relative;padding-left:18px}
+  & .am::before{content:"\25CF";position:absolute;left:0;top:0;color:var(--cc-hi)}
+  & .am.u{align-self:stretch;max-width:none;background:var(--cc-user);border:0;border-radius:0;color:var(--cc-hi);padding:0 6px 0 22px;margin:0 -6px}
+  & .am.u::before{content:"\276F";left:6px;color:var(--cc-dim)}
+  & .am.e{color:var(--cc-err)}
+  & .am.e::before{color:var(--cc-err)}
+  & .am small.at{color:var(--cc-dim);font-family:var(--cc-mono)}
+  & .am.u .tomain{color:var(--cc-sugg)}
+  & .am .atools{color:var(--cc-dim);font:13px var(--cc-mono)}
+  & .am .atools::before{content:"\23BF  "}
+  & .am.live .msgbody::after{background:var(--cc-claude)}
+  & .queue-ask{background:none;border:1px solid var(--cc-rule);border-radius:var(--cc-r);font-family:var(--cc-mono);font-size:13px}
+  & .queue-ask .qk{color:var(--cc-sugg)}
+  & .queue-ask .qt{color:var(--cc-hi);font-family:var(--cc-mono);font-size:13px}
+  & .queue-ask .qs{color:var(--cc-dim)}
+  & .queue-ask .qrow button.go{color:var(--cc-hi);border-color:var(--cc-rule)}
+  & #asdf{border-top:1px solid var(--cc-rule);border-bottom:1px solid var(--cc-rule);margin-bottom:10px;padding:6px 12px 6px 30px;gap:8px;background:var(--cc-bg);position:relative}
+  & #asdf::before{content:"\276F";position:absolute;left:12px;top:7px;color:var(--cc-hi);font:14px/19px var(--cc-mono)}
+  & #asd #asdbox{font:14px/19px var(--cc-mono);color:var(--cc-hi);border:0;padding:1px 0;background:none}
+  & #asd #asdgo{border:0;color:var(--cc-dim)}
+
+  /* popups: claude code's dialogs are round-bordered boxes. focused rows get ❯ and the suggestion colour */
+  & #ctx{background:var(--cc-bg);border:1px solid var(--cc-rule);border-radius:var(--cc-r);padding:6px 0;font:13px var(--cc-mono);color:var(--cc-fg);min-width:220px}
+  & #ctx div{padding:2px 14px 2px 26px;border-radius:0;position:relative}
+  & #ctx div:hover{background:none;color:var(--cc-sugg)}
+  & #ctx div:hover::after{content:"\276F";position:absolute;left:10px;top:2px;color:var(--cc-sugg)}
+  & #ctx div small{color:var(--cc-dim)}
+  & #ctx div.red{color:var(--cc-err)}
+  & #ctx div.red:hover,& #ctx div.red:hover::after{color:var(--cc-err)}
+  & #ctx div.chk::before{content:"\2714";color:var(--cc-ok)}
+  & #ctx hr{border:0;border-top:1px solid var(--cc-line);margin:5px 0}
+  & #mod{background:rgba(12,12,12,.78)}
+  & #modb{background:var(--cc-bg);border:1px solid var(--cc-rule);border-radius:var(--cc-r);color:var(--cc-fg);outline:0}
+  /* the title sits in the top border, like claude code's titled round boxes: ╭─ settings ──── x ─╮ */
+  & #modh{background:none;border-bottom:0;padding:0 14px;margin-top:-10px;height:19px;gap:8px}
+  & #modt{flex:0 1 auto;background:var(--cc-bg);padding:0 7px;font:bold 14px/19px var(--cc-mono);letter-spacing:0;text-transform:none;color:var(--cc-hi)}
+  & #modh::after{content:"";flex:1;order:1}
+  & #modx{order:2;background:var(--cc-bg)!important;font:13px var(--cc-mono);color:var(--cc-dim);padding:0 6px!important;border:0!important}
+  & #modx:hover{color:var(--cc-hi)}
+  & #modc{padding:10px 18px 14px;font:13px/1.5 var(--cc-mono)}
+  & #modc::after{content:"esc to close";display:block;margin-top:12px;color:var(--cc-dim);font-size:12px}
+  & .mrow,& .pnlrow{border-bottom:0;padding:4px 0}
+  & .mrow small,& .pnlrow small,& .pnlnote{color:var(--cc-dim)}
+  & #mod .themerow .sw{outline:1px solid var(--cc-line2);border:1px solid var(--cc-bg)}
+  & #mod .themerow .sw.on{outline:1px solid var(--cc-hi)}
+  & #modc .setupintro.brainwarn{color:var(--cc-warn)!important}
+  & .mrow:has(> .themerow)>span::after{content:" (default skin only)";color:var(--cc-dim);font-size:11px}
+  & .namef p{color:var(--cc-fg)}
+  & :is(.nameinp,.qpbox,.impq,.cm input,.pluginst input,.setuprow .rform input){background:var(--cc-bg);color:var(--cc-hi);border:1px solid var(--cc-line2);border-radius:var(--cc-r);font-family:var(--cc-mono)}
+  & .nameinp:focus{border-color:var(--cc-rule)}
+  & :is(.imphint,.impchk,.impfoot,.impstatus,.setupintro,.setupfoot span,#accountmsg,.dim){color:var(--cc-dim)}
+  & .improw .impsrc{color:var(--cc-sugg)}
+  & .improw time{color:var(--cc-dim)}
+  & .mcpout,& .rlog{background:var(--cc-bg);border:1px solid var(--cc-line2);border-radius:var(--cc-r);color:var(--cc-fg);font-family:var(--cc-mono)}
+  & .dl:hover{background:var(--cc-raise)}
+  & .dl.a{background:#225c2b;color:var(--cc-hi)}
+  & .dl.d{background:#7a2936;color:var(--cc-hi)}
+  & .dl.h{background:none;color:var(--cc-dim)}
+  & .dl.f{color:var(--cc-hi);font-weight:bold}
+  & .df{font-family:var(--cc-mono)}
+  & .cm{background:var(--cc-raise);border-left:2px solid var(--cc-warn);color:var(--cc-fg)}
+  & .bh,& .agh{color:var(--cc-dim);font:12px var(--cc-mono);letter-spacing:0;text-transform:none;background:none;border:0;padding:8px 0 2px}
+  & .agh:hover{color:var(--cc-hi)}
+  & .bcard{background:none;border:1px solid var(--cc-line2);border-radius:var(--cc-r);padding:4px 10px;color:var(--cc-fg);font:13px var(--cc-mono)}
+  & .bcard:hover{border-color:var(--cc-rule);color:var(--cc-sugg)}
+  & .bcard.run{color:var(--cc-claude);border-color:var(--cc-line2)}
+  & .bcard.need{color:var(--cc-warn);border-color:var(--cc-warn)}
+  /* agents: claude code's task rows. ● running orange (blinks), ✔ done green, ✘ failed red, details on a ⎿ line */
+  & .agrow{border-bottom:0;padding:4px 0}
+  & .agtop b{font:bold 13px var(--cc-mono);color:var(--cc-hi)}
+  & .agtop small,& .agdesc{color:var(--cc-dim)}
+  & .agdesc::before{content:"\23BF  "}
+  & .agkind{border:0;color:var(--cc-dim);letter-spacing:0;text-transform:none;background:none;padding:0}
+  & .agkind::before{content:"\B7 "}
+  & .agsum{color:var(--cc-fg)}
+  & .agsum:hover,& .agsum.open{color:var(--cc-sugg)}
+  /* clause writes ✓ / ✕ into finished dots itself; a running one is empty, so it gets the spinner glyph */
+  & .agdot{background:none!important;border:0!important;border-radius:0!important;width:auto!important;min-width:14px;height:auto!important;font:13px/19px var(--cc-mono)!important}
+  & .agdot.running{color:var(--cc-claude)}
+  & .agdot.running::before{content:"\2736";animation:ccspin 1.2s steps(1) infinite!important}
+  & .agdot.completed{color:var(--cc-ok)}
+  & .agdot.failed{color:var(--cc-err)}
+  & .setuprow{border-bottom:0}
+  & .setuprow strong,& .brainplug b{color:var(--cc-hi)}
+  & .setuprow em,& .brainais i,& .plugsync .pslab{color:var(--cc-dim)}
+  & .setuprow small,& .accountrow small,& .plugsync,& .plugsync .psync{color:var(--cc-dim)}
+  & .plugsync .psync.on{color:var(--cc-ok)}
+  & .setuprow .st{color:var(--cc-dim)}
+  & .setuprow .st.ok,& .brainais span.ok{color:var(--cc-ok)}
+  & .setuprow .st.need,& .brainais span.need,& .setuprow small.brainwarn,& .plugrow .pflag{color:var(--cc-warn)}
+  & .setuprow small.brainerr,& .plugrow .st.bad{color:var(--cc-err)}
+  & .setuprow a{color:var(--cc-sugg)}
+  & .brainais b{color:var(--cc-hi)}
+  & .plugrow .mbtn.on{color:var(--cc-ok)}
+  & .rcode{color:var(--cc-sugg);font-family:var(--cc-mono)}
+  & #lb{background:rgba(12,12,12,.94)}
+  & #lbh{color:var(--cc-dim);font:12px var(--cc-mono);letter-spacing:0;text-transform:none}
+  & #ptoast{background:var(--cc-bg);border:1px solid var(--cc-rule);border-radius:var(--cc-r);color:var(--cc-fg);font:13px var(--cc-mono);padding:6px 14px}
+  & #ptoast::before{content:"\273B  ";color:var(--cc-claude)}
+  & .skinnew{border-color:var(--cc-claude);color:var(--cc-claude);border-radius:4px}
+
+  /* drag targets, split panes, remote control */
+  & #drop{background:rgba(12,12,12,.92);border:1px dashed var(--cc-rule);border-radius:var(--cc-r);color:var(--cc-hi);font:bold 18px var(--cc-mono);letter-spacing:0}
+  & :is(#dropsplit,#droppv,#dropmain){background:rgba(215,119,87,.06);border:1px dashed var(--cc-claude);border-radius:var(--cc-r);color:var(--cc-hi);font:bold 13px var(--cc-mono);letter-spacing:0}
+  & .pbar:hover,& .pbar.drag{background:var(--cc-line2)}
+  & .pane{background:var(--cc-bg);outline:1px solid var(--cc-line)}
+  & .panebar{background:var(--cc-bg);color:var(--cc-dim);border-bottom:1px solid var(--cc-line);font:12px var(--cc-mono)}
+  & .panebar b:hover{color:var(--cc-hi)}
+  & :is(.pane,#col).pflash::after{outline:2px solid var(--cc-claude);outline-offset:-2px}
+  & #rview{background:var(--cc-bg)}
+  & #rbar{background:var(--cc-bg);color:var(--cc-fg);border-bottom:1px solid var(--cc-line);font:13px var(--cc-mono);letter-spacing:0}
+  & #rmsg{color:var(--cc-fg)}
+
+  /* the visuals panel + image review */
+  & .vw-panel{background:var(--cc-bg);color:var(--cc-fg);border-left:1px solid var(--cc-line);font-family:var(--cc-mono)}
+  & .vw-tabs button[aria-pressed=true]{color:var(--cc-hi);border-color:var(--cc-claude)}
+  & :is(.vw-status,.vw-time,.vw-missing){color:var(--cc-dim)}
+  & .vw-media{background:var(--cc-bg)}
+  & .vw-run h3{border-top-color:var(--cc-line)}
+  & .vr-dialog{background:var(--cc-bg);color:var(--cc-fg);border:1px solid var(--cc-rule);border-radius:var(--cc-r)}
+  & .vr-head{background:var(--cc-bg);border-bottom:1px solid var(--cc-line)}
+  & :is(.vr-help,.vr-labels){color:var(--cc-dim)}
+  & .vr-notice{background:var(--cc-bg);color:var(--cc-fg);border:1px solid var(--cc-rule);border-radius:var(--cc-r)}
+
+  /* plugin tabs: studio and unity get the same terminal palette (unity is below) */
+  & .ptab[data-tab="studio"]{background:var(--cc-bg);color-scheme:dark}
+}
+
+/* claude code's spinner frames, in order and back: · ✢ * ✶ ✻ ✽ ✽ ✻ ✶ * ✢ · */
+@keyframes ccspin{
+  0%{content:"\B7"}8.33%{content:"\2722"}16.67%{content:"*"}25%{content:"\2736"}33.33%{content:"\273B"}41.67%{content:"\273D"}
+  50%{content:"\273D"}58.33%{content:"\273B"}66.67%{content:"\2736"}75%{content:"*"}83.33%{content:"\2722"}91.67%{content:"\B7"}}
+@keyframes ccblink{0%{opacity:1}50%{opacity:.25}}
+
+@media (prefers-reduced-motion:reduce){
+  :root[data-skin="claude-code"] *, :root[data-skin="claude-code"] *::before, :root[data-skin="claude-code"] *::after{animation:none!important}
+}
+
+/* ---------- plugin tab: unity (.unity-app) ---------- */
+:root[data-skin="claude-code"] .unity-app{
+  --un-ok:#4eba65;--un-warn:#ffc107;--un-bad:#ff6b80;--un-in:#0c0c0c;--un-edge:#505050;--un-glass:#0c0c0c;--un-kit:#b1b9f9;--fg:#cccccc;--dim:#999999;--line:#3a3a3a;
+  color:#cccccc;background:#0c0c0c;font:13px/1.45 "Cascadia Mono","Cascadia Code",Consolas,ui-monospace,monospace;
+  & button{background:none;color:#cccccc;border:1px solid #505050;border-radius:6px;font-family:"Cascadia Mono","Cascadia Code",Consolas,ui-monospace,monospace}
+  & :is(.un-imsg,.un-sfold,.un-copy,.un-pchat){background:none;border-color:transparent}
+  & button:hover:not(:disabled){background:none;border-color:#888888;color:#ffffff}
+  & button:active:not(:disabled){transform:none}
+  & button:disabled{color:#505050;border-color:#3a3a3a;opacity:1}
+  & :is(button,.un-in,.un-card):focus-visible{outline:1px solid #b1b9f9}
+  & :is(.un-link,.un-x,.un-copies,.un-gfold,.un-chipb,.un-ghead.un-fold){background:none;border-color:transparent;color:#b1b9f9}
+  & :is(.un-link,.un-x,.un-copies,.un-gfold,.un-chipb,.un-ghead.un-fold):hover:not(:disabled){background:none;color:#ffffff}
+  & .un-link.on{color:#ffffff;background:none;box-shadow:inset 0 -2px 0 #d77757!important}
+  & :is(.un-act.on,.un-mini.on,.un-pill.on){background:none;border-color:#4eba65;color:#4eba65}
+  & .un-primary{background:none;border-color:#d77757;color:#d77757}
+  & .un-pill{background:none;color:#cccccc}
+  & .un-in{background:#0c0c0c;color:#ffffff;border:1px solid #505050;border-radius:6px;font:13px "Cascadia Mono",Consolas,ui-monospace,monospace;caret-color:#ffffff}
+  & .un-in:focus{border-color:#888888}
+  & .un-in::placeholder{color:#6c6c6c}
+  & :is(.un-bar,.un-head){background:#0c0c0c;border-bottom:1px solid #3a3a3a}
+  & .un-brand{background:none;padding:0;color:#ffffff;font:bold 14px "Cascadia Mono",Consolas,ui-monospace,monospace;letter-spacing:0;text-transform:none}
+  & .un-brand::before{content:"\273B  ";color:#d77757;font-weight:normal}
+  & :is(.un-list,.un-side){background:#0c0c0c}
+  & .un-ghead{color:#999999;background:none;border:0;padding:2px 4px;margin:10px 6px 2px;width:auto}
+  & .un-card{padding:3px 8px 3px 22px;border-left:0;border-radius:0;position:relative}
+  & .un-card:hover{background:none}
+  & .un-card:hover .un-cname{color:#b1b9f9}
+  & .un-card .un-cname{color:#cccccc;font:13px "Cascadia Mono",Consolas,ui-monospace,monospace}
+  & .un-card.on{background:#373737}
+  & .un-card.on::before{content:"\276F";position:absolute;left:7px;top:3px;color:#999999}
+  & .un-card.on .un-cname{color:#ffffff;font-weight:normal}
+  & .un-cacts{background:none}
+  & :is(.un-ver,.un-br){color:#999999}
+  & .un-dot.tone-none{border:1px solid #505050}
+  & .un-clist{border-left-color:#3a3a3a}
+  & .un-copy:hover{background:none;color:#b1b9f9}
+  & .un-copy.on{background:#373737}
+  & .un-tag{background:none;color:#999999;border:1px solid #505050;border-radius:4px}
+  & .un-past{background:#0c0c0c;border:1px solid #505050;border-radius:6px}
+  & .un-pchat:hover:not(:disabled),& .un-pchat.on{background:#373737;color:#ffffff}
+  & .un-strip{background:#0c0c0c}
+  & .un-cover{background:rgba(12,12,12,.92);color:#999999}
+  & .un-sec{border-bottom:1px solid #3a3a3a}
+  & .un-shead>b,& .un-sfold b{background:none;padding:0 4px;color:#ffffff}
+  & .un-sfold:hover:not(:disabled) b{color:#b1b9f9;background:none}
+  & .un-todos li input[type=checkbox]{accent-color:#4eba65}
+  & .un-why{background:none;border:1px solid #ffc107;border-radius:6px;color:#ffc107}
+  & :is(.un-log,.un-stack){background:#0c0c0c;border:1px solid #505050;border-radius:6px;color:#cccccc;font-family:"Cascadia Mono",Consolas,ui-monospace,monospace}
+  & .un-tests{background:none;border:1px solid #ff6b80;border-radius:6px}
+  & .un-items{background:#0c0c0c;border:1px solid #505050;border-radius:6px}
+  & .un-item{border-top-color:#3a3a3a}
+  & .un-item.open{background:#1a1a1a}
+  & .un-imsg{color:#cccccc}
+  & .un-imsg:hover:not(:disabled){color:#ffffff;background:none}
+  & :is(.un-shot,.un-shot img){background:#0c0c0c;border:1px solid #3a3a3a}
+  & .un-idx{background:none;border:1px solid #505050}
+  & .un-idx.off{border-color:#3a3a3a}
+  & .un-from{background:rgba(177,185,249,.1);color:#b1b9f9}
+}
+
+/* ---------- plugin tab: studio (.studio-app) ---------- */
+:root[data-skin="claude-code"] .studio-app{
+  --fg:#cccccc;--dim:#999999;--line:#3a3a3a;--st-ok:#4eba65;--st-warn:#ffc107;--st-bad:#ff6b80;--st-in:#0c0c0c;--st-glass:#0c0c0c;--st-edge:#505050;
+  color:#cccccc;background:#0c0c0c;font:13px/1.45 "Cascadia Mono","Cascadia Code",Consolas,ui-monospace,monospace;
+  & button{background:none;border-color:#505050;border-radius:6px;color:#cccccc}
+  & button:hover:not(:disabled){background:none;border-color:#888888;color:#ffffff}
+  & button:active:not(:disabled){transform:none}
+  & button:focus-visible,& .st-in:focus-visible{outline:1px solid #b1b9f9}
+  & .st-in{background:#0c0c0c;border-color:#505050;color:#ffffff}
+  & .st-in:focus{border-color:#888888}
+  & .st-in::placeholder{color:#6c6c6c}
+  & .st-bar{background:#0c0c0c;border-bottom-color:#3a3a3a}
+  & .st-tab{color:#999999;border-color:transparent!important;border-radius:0;font-weight:normal;box-shadow:inset 0 -2px 0 transparent!important}
+  & .st-tab:hover:not(:disabled){background:none;color:#ffffff}
+  & .st-tab.on{background:none;color:#ffffff;font-weight:normal;box-shadow:inset 0 -2px 0 #d77757!important}
+  & .st-vrow{position:relative;padding-left:24px}
+  & .st-vrow:hover{background:none;color:#b1b9f9}
+  & .st-vrow.on{background:#373737}
+  & .st-vrow.on::before{content:"\276F";position:absolute;left:8px;top:7px;color:#999999}
+  & .st-vrow.on .st-vtitle{font-weight:normal;color:#ffffff}
+  & :is(.st-ghead,.st-nhead,.st-fhead,.st-phead,.st-vhead,.st-dhead){color:#999999}
+  & :is(.st-log,.st-buildlog){background:#0c0c0c;border:1px solid #505050;border-radius:6px;color:#cccccc}
+}

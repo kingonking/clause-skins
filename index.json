@@ -1,6 +1,14 @@
 {
   "skins": [
     {
+      "id": "claude-code",
+      "name": "claude code",
+      "version": "1.0.0",
+      "description": "looks like the claude code terminal: monospace, dark, orange accents, ❯ prompts and ● tool rows. effects off",
+      "author": "kingonking",
+      "effects": false
+    },
+    {
       "id": "craigslist",
       "name": "craigslist",
       "version": "1.0.0",

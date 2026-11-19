@@ -1,0 +1,9 @@
+{
+  "id": "claude-code",
+  "name": "claude code",
+  "author": "kingonking",
+  "description": "looks like the claude code terminal: monospace, dark, orange accents, ❯ prompts and ● tool rows. effects off",
+  "version": "1.0.0",
+  "effects": false,
+  "themeColor": "#0c0c0c"
+}
