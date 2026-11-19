@@ -1,9 +1,17 @@
 {
   "skins": [
     {
-      "id": "claude-code",
-      "name": "claude code",
+      "id": "claude-app",
+      "name": "claude app",
       "version": "1.0.0",
+      "description": "looks like the claude desktop app: warm cream, serif replies, rounded bubbles and composer. follows your pc's light/dark mode. effects off",
+      "author": "kingonking",
+      "effects": false
+    },
+    {
+      "id": "claude-code",
+      "name": "claude terminal",
+      "version": "1.0.1",
       "description": "looks like the claude code terminal: monospace, dark, orange accents, ❯ prompts and ● tool rows. effects off",
       "author": "kingonking",
       "effects": false
