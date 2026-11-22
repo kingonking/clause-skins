@@ -518,3 +518,21 @@
   & :is(.st-ghead,.st-nhead,.st-fhead,.st-phead,.st-vhead,.st-dhead){color:#999999}
   & :is(.st-log,.st-buildlog){background:#0c0c0c;border:1px solid #505050;border-radius:6px;color:#cccccc}
 }
+/* structured tool rows (clause 1.0.20+: .tname/.targs spans, data-arg/state/result, data-dur on replies).
+   older clause has none of these, so the rules above still apply there */
+:root[data-skin="claude-code"]{
+  & .msg.tool .tname{font-weight:700;color:var(--cc-hi)}
+  & .msg.tool .tname[data-arg]::after{content:"(" attr(data-arg) ")";font-weight:400;color:var(--cc-fg)}
+  & .msg.tool[data-arg] .targs{display:none}
+  & .msg.tool:not([data-arg]) .targs{color:var(--cc-dim)}
+  & .msg.tool[data-result]::after{content:"\23BF  " attr(data-result);display:block;white-space:pre;overflow:hidden;text-overflow:ellipsis;text-indent:0;margin-left:18px;color:var(--cc-dim);font-weight:400}
+  & .msg.tool[data-state="err"]::before{color:var(--cc-err)}
+  & .msg.tool[data-state="err"]::after{color:var(--cc-err)}
+  & .msg.tool[data-state="run"]::before{color:var(--cc-dim);animation:ccblink 1s steps(1) infinite!important}
+  & .msg.bot[data-dur]:not(.live)::after{content:"\273B  Worked for " attr(data-dur) " \B7  " attr(data-ts)}
+}
+:root[data-skin="claude-code"]{
+  & .msg.tool.subtool .tmark{color:var(--cc-dim)}
+  & .msg.tool.subtool .tname{color:var(--cc-dim)}
+  & .msg.tool.subtool .tname[data-arg]::after{color:var(--cc-dim)}
+}

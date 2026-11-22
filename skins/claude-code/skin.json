@@ -3,7 +3,7 @@
   "name": "claude terminal",
   "author": "kingonking",
   "description": "looks like the claude code terminal: monospace, dark, orange accents, ❯ prompts and ● tool rows. effects off",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "effects": false,
   "themeColor": "#0c0c0c"
 }

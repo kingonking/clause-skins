@@ -469,3 +469,18 @@
   & .un-strip{background:var(--ca-bg1)}
   & .un-cover{background:rgba(250,249,245,.86);color:var(--ca-t2)}
 }
+/* structured tool rows (clause 1.0.20+: .tname/.targs spans, data-arg/state/result). older clause keeps the rules above */
+:root[data-skin="claude-app"]{
+  & .msg.tool .tname{font-weight:600;color:var(--ca-t1)}
+  & .msg.tool .tname[data-arg]::after{content:"  " attr(data-arg);font-weight:400;color:var(--ca-t2);white-space:pre}
+  & .msg.tool[data-arg] .targs{display:none}
+  & .msg.tool:not([data-arg]) .targs{color:var(--ca-t4)}
+  & .msg.tool[data-result] .targs{display:none}
+  & .msg.tool[data-state="ok"]::before{background:var(--ca-ok)}
+  & .msg.tool[data-state="err"]::before{background:var(--ca-err)}
+  & .msg.tool[data-state="err"] .tname{color:var(--ca-err)}
+  & .msg.tool[data-result]:hover::after{content:attr(data-result);position:static;display:block;margin-top:4px;color:var(--ca-t4);font:12px/18px var(--ca-mono);white-space:pre-wrap}
+}
+:root[data-skin="claude-app"]{
+  & .msg.tool.subtool .tname{color:var(--ca-t4);font-weight:500}
+}

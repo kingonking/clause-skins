@@ -3,7 +3,7 @@
   "name": "claude app",
   "author": "kingonking",
   "description": "looks like the claude desktop app: warm cream, serif replies, rounded bubbles and composer. follows your pc's light/dark mode. effects off",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "effects": false,
   "themeColor": "#faf9f5"
 }
