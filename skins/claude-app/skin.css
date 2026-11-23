@@ -660,3 +660,17 @@
   & #ctx hr{border-top:1px solid var(--ca-menuline);margin:4px 2px}
   & #modb{border-color:var(--ca-menuline)}
 }
+/* 1.2.1 fixes: long tool rows (no main argument -> raw json shown) never push the chat sideways; attachments lose clause's blue glow */
+:root[data-skin="claude-app"]{
+  & main{overflow-x:hidden}
+  & .msg.tool[data-tool]{overflow:hidden;min-width:0}
+  & .msg.tool[data-tool] .tname{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  & .msg.tool[data-tool] .targs{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  & .msg.tool .tname[data-arg]::after{white-space:nowrap}
+  & .msg.tool[data-result]::after{overflow:hidden;text-overflow:ellipsis}
+  & #pend{backdrop-filter:none;-webkit-backdrop-filter:none}
+  & .pt{box-shadow:none;border:1px solid var(--ca-line);border-radius:10px}
+  & .pt:hover{box-shadow:none}
+  & .pt b{width:18px;height:18px;border-radius:50%;background:var(--ca-bg0);color:var(--ca-t2);border:1px solid var(--ca-line);box-shadow:none;font:12px/16px var(--ca-sans)}
+  & .pt b:hover{color:var(--ca-t1);background:var(--ca-bg2)}
+}
