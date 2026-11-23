@@ -3,8 +3,8 @@
     {
       "id": "claude-app",
       "name": "claude app",
-      "version": "1.0.1",
-      "description": "looks like the claude desktop app: warm cream, serif replies, rounded bubbles and composer. follows your pc's light/dark mode. effects off",
+      "version": "1.1.0",
+      "description": "looks like the claude desktop app's code view: one-line recents, plain tool lines, a slim composer with its tools underneath. follows your pc's light/dark mode. effects off",
       "author": "kingonking",
       "effects": false
     },
