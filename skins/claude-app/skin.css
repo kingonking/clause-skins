@@ -17,6 +17,9 @@
   --ca-code:#f0eee6;--ca-scrim:rgba(20,20,19,.32);--ca-cover:rgba(250,249,245,.86);--ca-on:#ffffff;
   --ca-shadow-pop:0 8px 24px #0000001f,0 2px 6px #00000014;
   --ca-shadow-card:0 1px 2px rgba(11,11,11,.06),0 2px 8px rgba(11,11,11,.08);
+  /* surfaces from the real app: sidebar, row highlight, your bubble, composer card, menus, header text */
+  --ca-side:#f5f4ed;--ca-rowon:#ebe9e0;--ca-newrow:#e8e6dc;--ca-bubble:#f0eee6;--ca-comp:#ffffff;--ca-compline:rgba(31,30,29,.16);
+  --ca-menu:#ffffff;--ca-menuline:rgba(31,30,29,.14);--ca-menuhover:#f0eee6;--ca-head:#3d3d3a;--ca-icon:#5e5d59;--ca-del:#b53333;
   --ca-sans:"anthropic-sans","Anthropic Sans","Segoe UI Variable Text","Segoe UI Variable","Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
   --ca-serif:"anthropic-serif","Anthropic Serif",Georgia,"Times New Roman",Times,serif;
   --ca-mono:"anthropic-mono","Cascadia Mono","Cascadia Code",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
@@ -436,15 +439,17 @@
 @media (prefers-color-scheme:dark){
   :root[data-skin="claude-app"]{
     color-scheme:dark;
-    --ca-bg0:#222221;--ca-bg1:#1a1a19;--ca-bg2:#1f1f1e;--ca-bg3:#2a2a28;--ca-bg4:#302f2d;
-    --ca-t1:#ecebe6;--ca-t2:#c2c0b6;--ca-t4:#9c9a92;
-    --ca-line:rgba(222,220,209,.11);--ca-line2:rgba(222,220,209,.24);--ca-hover:rgba(222,220,209,.06);
-    --ca-link:#74abe2;--ca-err:#fe8181;--ca-errbg:rgba(221,83,83,.12);--ca-ok:#7cc35a;--ca-warn:#e5a33a;
-    --ca-code:#20201f;--ca-scrim:rgba(0,0,0,.55);--ca-cover:rgba(26,26,25,.86);
-    --ca-shadow-pop:0 8px 24px #00000052,0 2px 6px #0003;
+    --ca-bg0:#30302e;--ca-bg1:#262624;--ca-bg2:#1f1e1d;--ca-bg3:#3a3936;--ca-bg4:#333230;
+    --ca-t1:#e8e6e3;--ca-t2:#a8a6a1;--ca-t4:#8a8884;
+    --ca-line:#3a3936;--ca-line2:#4a4946;--ca-hover:#333230;
+    --ca-link:#5b9df5;--ca-acc:#5b9df5;--ca-err:#e5735c;--ca-errbg:rgba(229,115,92,.1);--ca-ok:#7cc35a;--ca-warn:#e5a33a;
+    --ca-code:#1f1e1d;--ca-scrim:rgba(0,0,0,.55);--ca-cover:rgba(38,38,36,.86);
+    --ca-shadow-pop:0 10px 28px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3);
     --ca-shadow-card:0 1px 2px rgba(0,0,0,.2),0 2px 8px rgba(0,0,0,.24);
+    --ca-side:#1f1e1d;--ca-rowon:#333230;--ca-newrow:#3a3936;--ca-bubble:#3a3936;--ca-comp:#30302e;--ca-compline:#42413e;
+    --ca-menu:#2b2a28;--ca-menuline:#3e3d3a;--ca-menuhover:#3a3936;--ca-head:#d6d4cf;--ca-icon:#b5b3ae;--ca-del:#e5735c;
   }
-  :root[data-skin="claude-app"] #drop{background:rgba(26,26,25,.92)}
+  :root[data-skin="claude-app"] #drop{background:rgba(38,38,36,.92)}
 }
 
 /* the claude app's thinking mark turns slowly */
@@ -552,4 +557,106 @@
   & .msg.tool.subtool[data-tool]{margin-left:8px;padding-left:12px;border-left:1px solid var(--ca-line);font-size:13px}
   & .msg.tool.subtool .tname::before,& .msg.tool.subtool .tname[data-arg]::after{font-size:13px!important}
   & .msg.tool.subtool .tname[data-arg]::after{color:var(--ca-t2)}
+}
+
+/* ---------- refined against real screenshots of the claude desktop app (windows, dark) ----------
+   sidebar on its own slightly darker surface, 34px single-line rows, a filled "+ New" row, dim section labels with a chevron,
+   avatar account row; header text rows; 60% bubbles; a 46px composer card with + on the left and the mic on the right;
+   the app's floating menus; notice cards; a serif greeting on an empty chat */
+:root[data-skin="claude-app"]{
+  /* sidebar */
+  & #side{background:var(--ca-side);border-right:1px solid var(--ca-line);width:320px}
+  & body.noside #side{margin-left:-320px}
+  & #sidetop{padding:6px 6px 2px;gap:1px}
+  & body:is(:not([data-tab]),[data-tab="chats"]):not(.noside,.pane):has(#tabs:not([hidden])) #sidetop{padding-top:44px}
+  & #wsbar{height:34px;align-items:center;gap:2px}
+  & #side #wssel{height:34px;padding:0 9px;border-radius:var(--ca-r);font:400 14px var(--ca-sans);color:var(--ca-t1)}
+  & #side #wssel:hover{background:var(--ca-rowon)}
+  & #side #snew{height:34px;padding:0 9px;gap:10px;background:var(--ca-newrow);border-radius:var(--ca-r)}
+  & #side #snew:hover{background:var(--ca-newrow);filter:brightness(1.06)}
+  & #side #snew::before{width:16px;height:16px;background:none;color:var(--ca-t1);font:300 19px/16px var(--ca-sans);border-radius:0}
+  & #side #snew::after{font:400 14px var(--ca-sans);color:var(--ca-t1)}
+  & #side #sq{height:34px;box-sizing:border-box;padding:0 9px 0 35px;font:400 14px var(--ca-sans);background-position:10px 50%;border-radius:var(--ca-r)}
+  & #side #sq::placeholder{color:var(--ca-t1);opacity:.92}
+  & #side #sq:hover{background-color:var(--ca-rowon)}
+  & #side #chatsort{height:28px;padding:0 9px;font:400 12.5px var(--ca-sans);color:var(--ca-t4);border-radius:var(--ca-r)}
+  & #side #chatsort:hover{background:var(--ca-rowon);color:var(--ca-t1)}
+  & #chats{padding:0 6px 10px}
+  & .sh{font:500 12.5px var(--ca-sans);color:var(--ca-t4);padding:22px 9px 6px}
+  & .sh:not(.tg)::after{content:"";display:inline-block;width:5px;height:5px;margin:0 0 3px 7px;border:solid currentColor;border-width:0 1.4px 1.4px 0;transform:rotate(45deg);opacity:.8}
+  & .ch{min-height:34px;box-sizing:border-box;padding:7px 9px 7px 15px;font:400 14px/20px var(--ca-sans);align-items:center;border-radius:var(--ca-r)}
+  & .ch:hover{background:var(--ca-rowon)}
+  & .ch.on{background:var(--ca-rowon)}
+  /* status: no leading mark; a small dim label at the row's right end, with a tiny coloured dot */
+  & .ch:not(.hit)::before{content:none!important;display:none!important}
+  & .ch :is(.chatstate,.chatmeta){color:var(--ca-t4)!important;font:400 12px/20px var(--ca-sans)!important}
+  & .ch .chatstate::before{content:""!important;display:inline-block!important;width:6px;height:6px;border-radius:50%;margin:0 6px 1px 0!important;vertical-align:middle;background:var(--ca-t4);border:0!important;animation:none!important}
+  & .ch.run .chatstate::before{background:var(--ca-clay)}
+  & .ch.wait .chatstate::before{background:var(--ca-acc)}
+  & .ch.stop .chatstate::before{background:var(--ca-err)}
+  & .ch.bgagents .chatstate::before{background:var(--ca-link)}
+  & .ch .ops b{color:var(--ca-icon)}
+  /* account row: round clay avatar, name, chevron */
+  & #sidefoot{padding:6px 6px 8px;border-top:0}
+  & #side #menub{height:44px;padding:0 9px;gap:10px;font:400 14px var(--ca-sans);color:var(--ca-t1)}
+  & #side #menub:hover,& #side #menub[aria-expanded=true]{background:var(--ca-rowon)}
+  & #menuav{width:28px!important;height:28px!important;border-radius:50%!important;background:var(--ca-clay)!important;color:#fff!important;font:500 13px var(--ca-sans)!important;text-transform:uppercase}
+  & #menub .mcar{font-size:0;margin-left:auto}
+  & #menub .mcar::after{content:"";display:inline-block;width:6px;height:6px;border:solid var(--ca-t4);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin-bottom:3px}
+  /* the chats / studio / unity switch: a small pill at the top right of the sidebar, the open one on a lighter rounded chip */
+  & #tabs{background:none;padding:2px;height:30px;gap:2px;border-radius:9px}
+  & #tabs button{border-radius:7px;font:500 12.5px var(--ca-sans);color:var(--ca-icon);padding:0 10px}
+  & #tabs button[aria-selected=true]{background:var(--ca-bg3);color:var(--ca-t1);box-shadow:none}
+  & body:is(:not([data-tab]),[data-tab="chats"]):not(.noside,.pane) #tabs:not([hidden]){top:50px;left:308px;transform:translateX(-100%)}
+  & body:is(:not([data-tab]),[data-tab="chats"]):not(.noside,.pane) #side::before{content:"";display:block;height:0}
+
+  /* header: the chat title row, quiet icon-coloured buttons, no rule under it */
+  & header{border-bottom:0;min-height:42px;padding:6px 12px 6px 18px}
+  /* the sidebar's surface runs up through the top bar, like the app's window, so the brand sits at the sidebar's top */
+  & body:is(:not([data-tab]),[data-tab="chats"]):not(.noside,.pane) header{background:linear-gradient(to right,var(--ca-side) 320px,var(--ca-line) 320px 321px,var(--ca-bg1) 321px)}
+  & #title{font:500 14px/1.3 var(--ca-sans);color:var(--ca-head)}
+  & #sub{background:none;padding:0;color:var(--ca-t4)}
+  & #btns>button:not(.pbtn){color:var(--ca-icon);font:400 13px var(--ca-sans)}
+  & #btns #new{background:none;border:0!important;box-shadow:none;color:var(--ca-icon)}
+  /* model / effort read like the app's "Opus 5.5  Medium  Auto" text row */
+  & header :is(select#backend,select#model,select#vsel){color:var(--ca-head)!important;font:400 13px var(--ca-sans)!important}
+  & #effw{color:var(--ca-t4);font:400 13px var(--ca-sans)}
+  & #effv{color:var(--ca-t4);font-weight:400}
+
+  /* messages */
+  & .msg.user{max-width:60%;background:var(--ca-bubble);border-radius:12px;padding:10px 14px;font:400 14.5px/1.5 var(--ca-sans)}
+  & .msg.bot{font:400 15px/1.55 var(--ca-sans)}
+  & .msg.bot .msgbody p{margin:0 0 10px}
+  & .msgbody :is(ul,ol){padding-left:24px}
+  /* under a reply: small dim actions, then the time, on one row */
+  & .msg.bot .acts{display:inline-flex;justify-content:flex-start;gap:2px;margin:6px 0 0 -6px;vertical-align:middle}
+  & .msg.bot:not(.live)::after{position:static;display:inline;margin:0 0 0 6px;font:12px var(--ca-sans);color:var(--ca-t4);vertical-align:middle}
+  & .acts button{color:var(--ca-t4)!important;font:400 12px var(--ca-sans)!important}
+  & .msg.user .acts{justify-content:flex-end}
+  /* notices and errors: a pane-coloured card with a hairline border */
+  & .msg.err{background:transparent;border:1px solid var(--ca-compline);border-radius:12px;padding:12px 14px 12px 40px;box-shadow:none}
+  & .msg.err::before{left:14px;top:14px}
+  /* an empty chat: the app's serif greeting */
+  & main:empty{flex-direction:row;justify-content:center;align-items:center}
+  & main:empty::before{content:"\273B";margin:0 8px 8vh 0;font:400 30px/1.2 var(--ca-sans);color:var(--ca-clay)}
+  & main:empty::after{content:"Back at it";margin:0 0 8vh;font:400 30px/1.2 var(--ca-serif);color:var(--ca-t1);letter-spacing:-.01em}
+
+  /* composer: a 46px card, + inside on the left, the mic and send/stop inside on the right */
+  & #inwrap{background:var(--ca-comp)!important;border:1px solid var(--ca-compline);border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  & footer:focus-within #inwrap{border-color:var(--ca-line2)}
+  & #col #box{height:46px;min-height:46px;padding:12px 84px 12px 44px;font:400 15px/1.45 var(--ca-sans)}
+  & #col footer #plusb{position:absolute;left:8px;top:8px;width:30px;height:30px;margin:0;z-index:1}
+  & #col footer #plusb::before{color:var(--ca-icon)}
+  & #col footer>#micb{position:absolute;right:42px;top:8px;width:30px;height:30px;z-index:1;color:var(--ca-icon)}
+  & #col #go{top:8px;right:8px}
+  & footer{margin-bottom:14px}
+
+  /* floating menus (right-click, account, pickers): the app's dark panel, 28px rows, red destructive item */
+  & #ctx{background:var(--ca-menu);border:1px solid var(--ca-menuline);border-radius:10px;padding:5px;min-width:180px;font:400 13.5px/20px var(--ca-sans);box-shadow:var(--ca-shadow-pop)!important}
+  & #ctx div{padding:4px 10px;min-height:28px;box-sizing:border-box;border-radius:6px;font-weight:400}
+  & #ctx div:hover{background:var(--ca-menuhover)}
+  & #ctx div small{color:var(--ca-t4);font-size:12px}
+  & #ctx div.red{color:var(--ca-del)}
+  & #ctx hr{border-top:1px solid var(--ca-menuline);margin:4px 2px}
+  & #modb{border-color:var(--ca-menuline)}
 }

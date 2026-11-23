@@ -3,7 +3,7 @@
   "name": "claude app",
   "author": "kingonking",
   "description": "looks like the claude desktop app's code view: one-line recents, plain tool lines, a slim composer with its tools underneath. follows your pc's light/dark mode. effects off",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "effects": false,
   "themeColor": "#faf9f5"
 }
