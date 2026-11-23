@@ -536,3 +536,19 @@
   & .msg.tool.subtool .tname{color:var(--cc-dim)}
   & .msg.tool.subtool .tname[data-arg]::after{color:var(--cc-dim)}
 }
+/* 1.1.0: clause's to-do panel (claude's TodoWrite list, #todo above the prompt) the way claude code prints its todos:
+   ☐ to do, ☒ done and struck, the current step bold in claude orange with the ✻ spinner */
+:root[data-skin="claude-code"]{
+  & #todo{padding:6px 24px 4px;border-top:1px solid var(--cc-line);background:var(--cc-bg);color:var(--cc-fg);font:13px/1.5 var(--cc-mono)}
+  & #todo .todo-head{color:var(--cc-dim)}
+  & #todo .todo-head:hover{color:var(--cc-hi)}
+  & #todo .todo-title{font-size:13px;letter-spacing:0;text-transform:none;color:var(--cc-hi);font-weight:700}
+  & #todo .todo-count,& #todo .todo-now{color:var(--cc-dim)}
+  & #todo .todo-box{color:var(--cc-dim)}
+  & #todo .todo-item.active{color:var(--cc-claude);font-weight:700}
+  & #todo .todo-item.active .todo-box::before{content:"\273B";width:auto;height:auto;border:0;border-radius:0;font-weight:400;animation:ccspin 2s linear infinite}
+  & #todo .todo-item.done{opacity:1;color:var(--cc-faint)}
+  & #todo .todo-item.done .todo-box{font-size:0;width:14px}
+  & #todo .todo-item.done .todo-box::before{content:"\2612";font-size:13px;color:var(--cc-ok)}
+  & #todo.alldone .todo-title{color:var(--cc-ok)}
+}

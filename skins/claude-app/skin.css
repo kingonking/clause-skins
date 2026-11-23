@@ -674,3 +674,26 @@
   & .pt b{width:18px;height:18px;border-radius:50%;background:var(--ca-bg0);color:var(--ca-t2);border:1px solid var(--ca-line);box-shadow:none;font:12px/16px var(--ca-sans)}
   & .pt b:hover{color:var(--ca-t1);background:var(--ca-bg2)}
 }
+/* 1.3.0: clause's to-do panel (claude's TodoWrite list, #todo above the composer) as a card in the composer's column,
+   the app's ✻ on the step it's doing; chats another chat started get a small ↳ in the recents */
+:root[data-skin="claude-app"]{
+  & #todo{width:min(var(--ca-col),calc(100% - 48px));box-sizing:border-box;margin:0 auto 8px;padding:8px 12px 6px;border:1px solid var(--ca-line);border-radius:var(--ca-rc);background:var(--ca-bg0);font:13px/1.55 var(--ca-sans);color:var(--ca-t2);box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  & #todo .todo-head{color:var(--ca-t4);gap:8px}
+  & #todo .todo-head:hover{color:var(--ca-t1)}
+  & #todo .todo-caret{font-size:10px}
+  & #todo .todo-title{font:500 13px var(--ca-sans);letter-spacing:0;text-transform:none;color:var(--ca-t1)}
+  & #todo .todo-count{color:var(--ca-t4)}
+  & #todo .todo-now{color:var(--ca-t2)}
+  & #todo .todo-list{margin-top:4px;padding-left:0}
+  & #todo .todo-box{color:var(--ca-t4)}
+  & #todo .todo-item.active{color:var(--ca-t1)}
+  & #todo .todo-item.active .todo-box::before{content:"\273B";width:auto;height:auto;border:0;border-radius:0;color:var(--ca-clay);font:13px/1 var(--ca-sans);animation:caspin 1.6s linear infinite!important}
+  & #todo .todo-item.done{opacity:1;color:var(--ca-t4)}
+  & #todo .todo-item.done .todo-box{color:var(--ca-ok)}
+  & #todo .todo-item.done .todo-text{text-decoration-color:var(--ca-line2)}
+  & #todo.alldone .todo-title{color:var(--ca-ok)}
+  & .ch[data-from] .t::before{content:"\21B3";margin-right:5px;color:var(--ca-t4)}
+}
+:root[data-skin="claude-app"]{
+  & .chatmeta .spawnfrom{display:none}   /* the ↳ says it; the one-line row keeps its title */
+}
