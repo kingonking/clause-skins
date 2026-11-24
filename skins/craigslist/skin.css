@@ -401,3 +401,15 @@
   & .un-idx.off{border-color:#ccc}
   & .un-from{background:#eef;color:#006}
 }
+
+/* 1.1.0: newer clause folds a run of tool calls into one summary line (.toolgrp-sum); a plain link-ish line */
+:root[data-skin="craigslist"]{
+  & .toolgrp{gap:2px}
+  & .toolgrp-sum{color:#555;font:12px/1.3 var(--cl-mono);border-left:0;border-image:none;padding:0 8px}
+  & .toolgrp-sum .tg-txt{color:#00c;text-decoration:underline}
+  & .toolgrp-sum:hover .tg-txt{color:#551a8b}
+  & .toolgrp-sum .tg-fail{color:var(--cl-bad)}
+  & .toolgrp-sum .tg-n{color:#555}
+  & .toolgrp-body{gap:2px;padding-left:16px}
+  & #col #tobottom.new::after{background:#c00;box-shadow:none;width:8px;height:8px;top:-3px;right:-3px}
+}

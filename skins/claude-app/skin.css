@@ -706,3 +706,23 @@
 :root[data-skin="claude-app"]{
   & .chatmeta .spawnfrom{display:none}   /* the ↳ says it; the one-line row keeps its title */
 }
+
+/* 1.4.0: newer clause folds a run of tool calls into one summary line (.toolgrp > .toolgrp-sum + .toolgrp-body). drawn like the
+   code view's grey "Read 3 files, ran 2 commands ›" line: chevron trailing, turns down when open, clay star while it runs */
+:root[data-skin="claude-app"]{
+  & .toolgrp{gap:0;max-width:100%}
+  & .toolgrp-sum{align-self:flex-start;max-width:100%;box-sizing:border-box;gap:6px;color:var(--ca-t4);font:14px/22px var(--ca-sans);padding:0;border:0;border-image:none;border-radius:6px;cursor:pointer}
+  & .toolgrp-sum:hover{color:var(--ca-t1)}
+  & .toolgrp-sum:hover .tg-txt{text-decoration:none}
+  & .toolgrp-sum .tg-txt::first-letter{text-transform:uppercase}
+  & .toolgrp-sum .tg-caret{order:9;font-size:0;width:14px;height:22px;align-self:flex-start;position:relative;opacity:1;margin-left:-2px}
+  & .toolgrp-sum .tg-caret::before{content:"";position:absolute;left:2px;top:8.5px;width:5px;height:5px;border:solid currentColor;border-width:1.5px 1.5px 0 0;transform:rotate(45deg);opacity:.75}
+  & .toolgrp.open>.toolgrp-sum .tg-caret::before{top:6.5px;transform:rotate(135deg)}
+  & .toolgrp-sum .tg-spin{order:-1;color:var(--ca-clay);font:13px/22px var(--ca-sans);animation:caspin 1.6s linear infinite!important}
+  & .toolgrp.live .tg-txt{color:var(--ca-t2)}
+  & .toolgrp-sum .tg-fail{color:var(--ca-err)}
+  & .toolgrp-sum .tg-n{display:none}
+  & .toolgrp-body{gap:0;padding:2px 0 4px 12px;margin-left:6px;border-left:1px solid var(--ca-line)}
+  & .toolgrp-body>.msg.tool.subtool[data-tool]{margin-left:8px}
+  & #col #tobottom.new::after{background:var(--ca-clay);box-shadow:none;width:8px;height:8px;top:-1px;right:-1px}
+}

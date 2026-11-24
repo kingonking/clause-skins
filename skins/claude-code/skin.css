@@ -552,3 +552,27 @@
   & #todo .todo-item.done .todo-box::before{content:"\2612";font-size:13px;color:var(--cc-ok)}
   & #todo.alldone .todo-title{color:var(--cc-ok)}
 }
+
+/* 1.2.0: newer clause folds a run of tool calls into one line (.toolgrp > .toolgrp-sum + .toolgrp-body), like claude code's
+   "● Read 3 files, ran 2 commands (ctrl+o to expand)". here it's a click. the dot blinks grey while it runs, failures in red */
+:root[data-skin="claude-code"]{
+  & .toolgrp{gap:0;max-width:none}
+  & .toolgrp-sum{position:relative;gap:0;color:var(--cc-fg);font:15px/19px var(--cc-mono);padding:0 0 0 18px;border:0;border-image:none;cursor:pointer;white-space:nowrap}
+  & .toolgrp-sum::before{content:"\25CF";position:absolute;left:0;top:0;color:var(--cc-ok)}
+  & .toolgrp.live>.toolgrp-sum::before{color:var(--cc-dim);animation:ccblink 1s steps(1) infinite!important}
+  & .toolgrp[data-fail]:not([data-fail="0"])>.toolgrp-sum::before{color:var(--cc-err)}
+  & .toolgrp-sum:hover .tg-txt{text-decoration:none}
+  & .toolgrp-sum .tg-caret,& .toolgrp-sum .tg-spin,& .toolgrp-sum .tg-n{display:none}
+  & .toolgrp-sum .tg-txt{color:var(--cc-hi)}
+  & .toolgrp-sum .tg-txt::first-letter{text-transform:uppercase}
+  & .toolgrp.live .tg-txt::after{content:"\2026"}
+  & .toolgrp-sum .tg-fail{color:var(--cc-err);margin-left:1ch}
+  & .toolgrp-sum .tg-fail::before{content:"\00b7  "}
+  & .toolgrp-sum::after{content:"(click to expand)";flex:none;margin-left:1ch;color:var(--cc-dim)}
+  & .toolgrp.open>.toolgrp-sum::after{content:"(click to collapse)"}
+  & .toolgrp.live>.toolgrp-sum::after{content:none}
+  & .toolgrp-body{gap:6px;padding:8px 0 0 8px}
+  & .toolgrp-body>.msg.tool.subtool{margin-top:-6px}
+  & #col #tobottom.new::after{background:var(--cc-claude);box-shadow:none;border-radius:50%;width:8px;height:8px;top:-3px;right:-3px}
+  & main>.toolgrp+.msg.tool.subtool{margin-top:0}
+}

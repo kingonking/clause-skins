@@ -466,3 +466,13 @@
   & .un-idx.off{border-color:#17532c}
   & .un-from{background:rgba(95,224,208,.1);color:#5fe0d0}
 }
+
+/* 1.1.0: newer clause folds a run of tool calls into one summary line (.toolgrp-sum); same green as the tool rows */
+:root[data-skin="terminal"]{
+  & .toolgrp{gap:2px}
+  & .toolgrp-sum{color:#28884b;font:12px/1.35 var(--t-mono);border-left:0;border-image:none;padding:0 0 0 2px;text-shadow:none}
+  & .toolgrp-sum:hover{color:var(--t-hi)}
+  & .toolgrp-sum .tg-fail{color:var(--t-red)}
+  & .toolgrp-body{gap:2px;padding-left:2ch}
+  & #col #tobottom.new::after{content:"";position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:0;background:var(--t-acc);box-shadow:none}
+}

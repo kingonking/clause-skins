@@ -3,7 +3,7 @@
   "name": "craigslist",
   "author": "kingonking",
   "description": "a plain 2000s web page. effects off",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "effects": false,
   "themeColor": "#ffffff"
 }
