@@ -339,6 +339,15 @@
   & #asd #asdgo{font-size:0;width:28px;height:28px;padding:0;background:var(--ca-send);color:#fff;border-radius:var(--ca-r);display:grid;place-items:center;align-self:flex-end}
   & #asd #asdgo::before{content:"\2191";font:600 15px/1 var(--ca-sans)}
   & #asd #asdgo:hover:not(:disabled){background:var(--ca-clay);color:#fff}
+  /* aside images: text on top, "+" and send underneath like the main composer; quiet chips */
+  & #asdf{flex-wrap:wrap}
+  & #asd #asdbox{flex:1 1 100%;order:0}
+  & #asd #asdatt{order:1;font-size:0;width:28px;height:28px;padding:0;display:grid;place-items:center;border:0;background:none;color:var(--ca-icon,var(--ca-t2));border-radius:var(--ca-r)}
+  & #asd #asdatt::before{content:"+";font:300 20px/1 var(--ca-sans)}
+  & #asd #asdatt:hover{background:var(--ca-hover);color:var(--ca-t1)}
+  & #asd #asdgo{order:2;margin-left:auto}
+  & #asdpend{border-top:0;padding:8px 12px 0}
+  & #asdpend .pt{border-color:var(--ca-line)}
 
   /* popovers: white, 12px radius, the app's popover shadow; rows with a soft rounded hover */
   & #ctx{background:var(--ca-bg0);border:1px solid var(--ca-line);border-radius:var(--ca-rc);padding:6px;font:14px var(--ca-sans);color:var(--ca-t1);min-width:220px;box-shadow:var(--ca-shadow-pop)!important}

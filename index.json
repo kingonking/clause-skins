@@ -3,7 +3,7 @@
     {
       "id": "claude-app",
       "name": "claude app",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "description": "looks like the claude desktop app's code view: one-line recents, plain tool lines, a slim composer with its tools underneath. follows your pc's light/dark mode. effects off",
       "author": "kingonking",
       "effects": false
