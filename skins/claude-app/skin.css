@@ -164,7 +164,7 @@
   & .ch .ops b.sure{background:var(--ca-err);color:#fff}
   & #side .ch input{border:1px solid var(--ca-acc);border-radius:6px;background:var(--ca-bg0);color:var(--ca-t1);font:14px var(--ca-sans)}
   & .ch.hit .sn{color:var(--ca-t4);font:12px var(--ca-sans)}
-  & .ch.hit .sn :is(b,mark,em){color:var(--ca-t1);background:rgba(217,119,87,.18);border-radius:3px}
+  & .ch.hit .sn :is(b,mark,em){color:var(--ca-t1);background:color-mix(in srgb,var(--ca-clay) 18%,transparent);border-radius:3px}
   & .none{color:var(--ca-t4);font:13px var(--ca-sans)}
   & #sidefoot{border-top:0;padding:8px 10px 10px}
   & #side #menub{padding:6px 8px;gap:10px;font:400 14px var(--ca-sans);color:var(--ca-t1);border-radius:var(--ca-r)}
@@ -369,7 +369,7 @@
   & #mod .themerow .sw{border-radius:50%;outline:1px solid var(--ca-line);border:2px solid var(--ca-bg0)}
   & #mod .themerow .sw.on{outline:2px solid var(--ca-t1)}
   & #modc .setupintro.brainwarn{color:var(--ca-warn)!important}
-  & .mrow:has(> .themerow)>span::after{content:" (default skin only)";color:var(--ca-t4);font-size:12px}
+  & .mrow:has(> .themerow)>span::after{content:" (accent colour)";color:var(--ca-t4);font-size:12px}
   & :is(.nameinp,.qpbox,.impq,.cm input,.pluginst input,.setuprow .rform input){background:var(--ca-bg0);color:var(--ca-t1);border:1px solid var(--ca-line2);border-radius:var(--ca-r);font-family:var(--ca-sans)}
   & :is(.imphint,.impchk,.impfoot,.impstatus,.setupintro,.setupfoot span,#accountmsg,.dim){color:var(--ca-t4)}
   & .improw .impsrc{color:var(--ca-link)}
@@ -385,7 +385,7 @@
   & .agh:hover{color:var(--ca-t1)}
   & .bcard{background:var(--ca-bg0);border:1px solid var(--ca-line);border-radius:var(--ca-rc);padding:8px 12px;color:var(--ca-t1);font:14px var(--ca-sans);box-shadow:var(--ca-shadow-card)}
   & .bcard:hover{border-color:var(--ca-line2);background:var(--ca-bg1)}
-  & .bcard.run{border-color:rgba(217,119,87,.45)}
+  & .bcard.run{border-color:color-mix(in srgb,var(--ca-clay) 45%,transparent)}
   & .bcard.need{border-color:rgba(135,90,8,.4)}
   /* agents: the app's task rows. spinning clay ✻ while running, green ✓ done, red ✕ failed (clause writes ✓ / ✕ itself) */
   & .agrow{border:1px solid var(--ca-line);padding:10px 12px;border-radius:var(--ca-rc);background:var(--ca-bg0);margin-bottom:8px}
@@ -420,7 +420,7 @@
 
   /* drag targets, split panes, remote control */
   & #drop{background:rgba(250,249,245,.92);border:2px dashed var(--ca-clay);border-radius:var(--ca-rc);color:var(--ca-t1);font:600 20px var(--ca-serif);letter-spacing:0;text-transform:none}
-  & :is(#dropsplit,#droppv,#dropmain){background:rgba(217,119,87,.08);border:2px dashed var(--ca-clay);border-radius:var(--ca-rc);color:var(--ca-t1);font:500 14px var(--ca-sans);letter-spacing:0}
+  & :is(#dropsplit,#droppv,#dropmain){background:color-mix(in srgb,var(--ca-clay) 8%,transparent);border:2px dashed var(--ca-clay);border-radius:var(--ca-rc);color:var(--ca-t1);font:500 14px var(--ca-sans);letter-spacing:0}
   & .pbar:hover,& .pbar.drag{background:var(--ca-line2)}
   & .pane{background:var(--ca-bg1);outline:1px solid var(--ca-line)}
   & .panebar{background:var(--ca-bg2);color:var(--ca-t4);border-bottom:1px solid var(--ca-line);font:12px var(--ca-sans)}
@@ -725,4 +725,65 @@
   & .toolgrp-body{gap:0;padding:2px 0 4px 12px;margin-left:6px;border-left:1px solid var(--ca-line)}
   & .toolgrp-body>.msg.tool.subtool[data-tool]{margin-left:8px}
   & #col #tobottom.new::after{background:var(--ca-clay);box-shadow:none;width:8px;height:8px;top:-1px;right:-1px}
+}
+
+/* 1.5.0: the accent. the clay orange follows clause's colour-scheme swatches (clause sets data-hue + --clause-hue on <html>;
+   no attribute = the default swatch = clay). the six swatches get hand-tuned pairs for light and dark (marks >= 3:1 on the
+   page, white or dark text on the send button >= 4.5:1); any other slider hue gets an even-lightness oklch accent.
+   the page colours themselves never change */
+:root[data-skin="claude-app"]{
+  --ca-sendfg:#fff;--ca-avfg:#fff;--ca-wait:var(--ca-acc);
+  & #col footer:has(#box:not(:placeholder-shown)) #go{color:var(--ca-sendfg)!important}
+  & #asd #asdgo,& #asd #asdgo:hover:not(:disabled){color:var(--ca-sendfg)}
+  & #menuav{color:var(--ca-avfg)!important}
+  & .ch.wait .chatstate::before{background:var(--ca-wait)}
+  /* the colour-scheme swatches show this skin's accents, not clause's neon hues */
+  & #mod .themerow .sw[title=default]{background:#d97757!important}
+  & #mod .themerow .sw[title=ice]{background:#2f8a55!important}
+  & #mod .themerow .sw[title=blue]{background:#2f78d4!important}
+  & #mod .themerow .sw[title=violet]{background:#8560d6!important}
+  & #mod .themerow .sw[title=pink]{background:#d0508a!important}
+  & #mod .themerow .sw[title=red]{background:#d64545!important}
+  & #mod .themerow .sw[title=amber]{background:#e3a21a!important}
+}
+:root[data-skin="claude-app"][data-hue]{--ca-clay:oklch(.6 .14 calc((var(--clause-hue) + 30) * 1deg));--ca-send:oklch(.54 .14 calc((var(--clause-hue) + 30) * 1deg))}
+:root[data-skin="claude-app"][data-hue="190"]{--ca-clay:#2f8a55;--ca-send:#267a48}
+:root[data-skin="claude-app"][data-hue="220"]{--ca-clay:#2f78d4;--ca-send:#2668c2;--ca-wait:#d97757}
+:root[data-skin="claude-app"][data-hue="270"]{--ca-clay:#8560d6;--ca-send:#7450c8}
+:root[data-skin="claude-app"][data-hue="320"]{--ca-clay:#d0508a;--ca-send:#bd3f78}
+:root[data-skin="claude-app"][data-hue="355"]{--ca-clay:#d64545;--ca-send:#c23636}
+:root[data-skin="claude-app"][data-hue="40"]{--ca-clay:#b8800f;--ca-send:#e3a21a;--ca-sendfg:#141413;--ca-avfg:#141413;& #menuav{background:var(--ca-send)!important}}
+/* "stopped" is a red ring, not a dot, so it never reads as "working" (clay and the dark error red are close; so is a red accent) */
+:root[data-skin="claude-app"] .ch.stop .chatstate::before{background:none;box-shadow:inset 0 0 0 1.5px var(--ca-err)}
+/* a picked accent: the avatar sits on the deeper send shade, so its white letter stays readable in dark mode too */
+:root[data-skin="claude-app"][data-hue] #menuav{background:var(--ca-send)!important}
+@media (prefers-color-scheme:dark){
+  :root[data-skin="claude-app"][data-hue]{--ca-clay:oklch(.72 .13 calc((var(--clause-hue) + 30) * 1deg));--ca-send:oklch(.54 .14 calc((var(--clause-hue) + 30) * 1deg))}
+  :root[data-skin="claude-app"][data-hue="190"]{--ca-clay:#5cbf7f;--ca-send:#2b7f4c}
+  :root[data-skin="claude-app"][data-hue="220"]{--ca-clay:#5b9df5;--ca-send:#2f6fcf}
+  :root[data-skin="claude-app"][data-hue="270"]{--ca-clay:#a88cf2;--ca-send:#7656d2}
+  :root[data-skin="claude-app"][data-hue="320"]{--ca-clay:#ea7cad;--ca-send:#c0447c}
+  :root[data-skin="claude-app"][data-hue="355"]{--ca-clay:#f06a6a;--ca-send:#c73a3a}
+  :root[data-skin="claude-app"][data-hue="40"]{--ca-clay:#e6b13c;--ca-send:#e3a21a}
+}
+
+/* 1.5.0: the copy / edit / regenerate row and the time take no room. they float in the gap under the message while the mouse
+   is on it (or focus is inside it), so nothing below moves. the row starts right at the message's bottom edge, so moving the
+   mouse from the text down onto the buttons never leaves the message */
+:root[data-skin="claude-app"]{
+  & .msg:is(.user,.bot,.err){position:relative}
+  & .msg.user{margin:6px 0 12px}
+  & .msg.bot{margin-bottom:12px}
+  & .msg:is(.user,.bot)>.acts{position:absolute;top:100%;display:flex;gap:2px;margin:0!important;padding-top:2px;opacity:0;pointer-events:none;z-index:2;white-space:nowrap;transition:opacity .12s ease!important}
+  & .msg.bot>.acts{left:-6px;right:0;justify-content:flex-start}
+  & .msg.user>.acts{left:0;right:-6px;justify-content:flex-end}
+  & .msg:is(.user,.bot):is(:hover,:focus-within)>.acts{opacity:1;pointer-events:auto}
+  & .acts button{height:22px;line-height:16px!important;box-sizing:border-box}
+  /* the time: right end of the row under a reply, left of edit / copy under your message, under the card for an error */
+  & .msg:is(.user,.bot,.err)::after{pointer-events:none;transition:opacity .12s ease!important}
+  & .msg.bot:not(.live)::after{position:absolute;display:block;top:100%;right:0;left:auto;margin:0;padding-top:2px;font:12px/22px var(--ca-sans)}
+  & .msg.user::after{position:absolute;top:100%;bottom:auto;right:84px;margin:0;padding-top:2px;font:12px/22px var(--ca-sans);white-space:nowrap}
+  & .msg.err::after{position:absolute;top:100%;left:0;margin:0;padding-top:2px;font:12px/18px var(--ca-sans);white-space:nowrap}
+  & .msg.err{margin-bottom:4px}
+  & :is(.msg.user,.msg.bot,.msg.err):focus-within::after{opacity:1}
 }

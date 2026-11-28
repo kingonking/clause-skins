@@ -2,8 +2,8 @@
   "id": "claude-app",
   "name": "claude app",
   "author": "kingonking",
-  "description": "looks like the claude desktop app's code view: one-line recents, plain tool lines, a slim composer with its tools underneath. follows your pc's light/dark mode. effects off",
-  "version": "1.4.0",
+  "description": "looks like the claude desktop app's code view: one-line recents, plain tool lines, a slim composer with its tools underneath, message buttons that only show on hover. follows your pc's light/dark mode; the colour scheme swatches pick the accent (clay, green, blue, purple, pink, red, amber). effects off",
+  "version": "1.5.0",
   "effects": false,
   "themeColor": "#faf9f5"
 }

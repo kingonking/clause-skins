@@ -50,7 +50,7 @@ Clause refuses a skin (and the Action fails the push) when its `skin.css`:
 
 ## The effects flag
 
-`"effects": true` keeps Clause's effects (the 3D background, sparks and rings, hack overlays, the 3D logo). `"effects": false` turns them all off while the skin is active, so nothing is drawn or loaded for them. Sounds still play. Use `false` for flat or light skins like craigslist. While a skin is active, the effects menu shows "off (skin)", and the color-scheme hue only applies to the default skin.
+`"effects": true` keeps Clause's effects (the 3D background, sparks and rings, hack overlays, the 3D logo). `"effects": false` turns them all off while the skin is active, so nothing is drawn or loaded for them. Sounds still play. Use `false` for flat or light skins like craigslist. While a skin is active, the effects menu shows "off (skin)", and the color-scheme hue doesn't tint the page. Instead Clause puts the picked hue on `<html>` as `data-hue="<0-359>"` and `--clause-hue:<0-359>` (neither is there when the "default" swatch is picked), so a skin can use it, for example as its accent colour: `:root[data-skin="midnight"][data-hue="220"]{--accent:#2f78d4}`. The swatches are 190, 220, 270, 320, 355 and 40; the slider gives any other value. Older Clause versions don't set these, so keep the skin's default look without them.
 
 Optional: `"themeColor": "#ffffff"` sets the window's title-bar color. Without it, the title bar is white when effects are off and dark when they're on.
 
